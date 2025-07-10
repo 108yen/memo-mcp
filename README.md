@@ -1,18 +1,11 @@
-# npm script template
+# memo-mcp
 
-A template repository for building npm script projects with TypeScript, ESLint, and other development tools pre-configured.
+`memo-mcp` is an MCP (Model Context Protocol) server that enables agents to record, search, and retrieve memos using LowDB as a lightweight local database. This server provides a simple API for storing and managing memos, making it easy to integrate with agent-based systems or automation workflows. Key features include:
+
+- Record new memos with flexible metadata
+- Search existing memos by keywords or attributes
+- Retrieve and read stored memos efficiently
+
+LowDB is used for persistent, file-based storage, ensuring fast and reliable memo management without the need for a full-scale database server.
 
 ## Usage
-
-1. Create a new repository from this template
-2. Install dependencies: `pnpm install`
-3. Update `package.json` config
-   - `name`
-   - `repository`
-
-4. Update `.changeset/config.json`
-   - repo url
-
-5. Update release workflow
-   - Delete `if: false`
-   - Setup `NPM_TOKEN`
