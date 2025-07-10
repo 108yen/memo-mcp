@@ -35,3 +35,7 @@ export const deleteMemo = (id: string) => {
   }
   return null
 }
+
+export const searchMemos = (query: string) => {
+  return db.data.memos.filter((memo) => memo.content.includes(query))
+}

@@ -3,7 +3,14 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod"
 import { version } from "../package.json"
 import { db } from "./db"
-import { createMemo, deleteMemo, getMemo, getMemos, updateMemo } from "./memos"
+import {
+  createMemo,
+  deleteMemo,
+  getMemo,
+  getMemos,
+  searchMemos,
+  updateMemo,
+} from "./memos"
 
 const server = new McpServer(
   {
@@ -12,7 +19,7 @@ const server = new McpServer(
   },
   {
     instructions:
-      "This is a memo management tool. You can create, read, update, and delete memos.",
+      "This is a memo management tool. You can create, read, update, and delete memos. If the user requests any operation related to memos (create, retrieve, update, delete, or search), you must use the tools provided by this MCP server. Do not manipulate memos directly via the database or by any other means.",
   },
 )
 
@@ -96,6 +103,23 @@ server.registerTool(
     const deletedMemo = deleteMemo(id)
     return {
       content: [{ text: JSON.stringify(deletedMemo), type: "text" }],
+    }
+  },
+)
+
+server.registerTool(
+  "searchMemos",
+  {
+    description: "Search memos by keyword",
+    inputSchema: {
+      query: z.string().describe("The keyword to search for"),
+    },
+    title: "Search Memos",
+  },
+  ({ query }) => {
+    const memos = searchMemos(query)
+    return {
+      content: [{ text: JSON.stringify(memos), type: "text" }],
     }
   },
 )

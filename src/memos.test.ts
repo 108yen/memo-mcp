@@ -1,6 +1,13 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { db } from "./db"
-import { createMemo, deleteMemo, getMemo, getMemos, updateMemo } from "./memos"
+import {
+  createMemo,
+  deleteMemo,
+  getMemo,
+  getMemos,
+  searchMemos,
+  updateMemo,
+} from "./memos"
 
 describe("memo tool", () => {
   beforeEach(async () => {
@@ -42,5 +49,15 @@ describe("memo tool", () => {
     expect(deletedMemo?.content).toBe("test memo")
     const memos = getMemos()
     expect(memos.length).toBe(0)
+  })
+
+  it("should search memos", () => {
+    createMemo("this is a test memo")
+    createMemo("another memo")
+    const memos = searchMemos("test")
+    expect(memos.length).toBe(1)
+    if (memos[0]) {
+      expect(memos[0].content).toBe("this is a test memo")
+    }
   })
 })
