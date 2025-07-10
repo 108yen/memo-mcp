@@ -1,7 +1,7 @@
 {
-  "name": "script",
+  "name": "memo-mcp",
   "version": "0.1.0",
-  "description": "This is a template for a script project using TypeScript.",
+  "description": "A simple memo management MCP using LowDB",
   "main": "bin/index.js",
   "bin": {
     "script": "bin/index.js"
@@ -22,7 +22,11 @@
     "test:coverage": "vitest run --coverage",
     "quality": "pnpm format && pnpm lint && pnpm typecheck && pnpm test"
   },
-  "keywords": [],
+  "keywords": [
+    "mcp",
+    "memo",
+    "lowdb"
+  ],
   "author": "108yen",
   "license": "MIT",
   "packageManager": "pnpm@10.12.4",
@@ -35,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/108yen/script.git"
+    "url": "https://github.com/108yen/memo-mcp.git"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.15.0",
