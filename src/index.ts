@@ -1,27 +1,97 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
+import { z } from "zod"
 import { version } from "../package.json"
+import { createMemo, deleteMemo, getMemo, getMemos, updateMemo } from "./memos"
 
 const server = new McpServer({
   name: "memo-mcp",
   version,
 })
 
-// This is a simple example of a tool that adds two numbers together.
-// server.registerTool(
-//   "add",
-//   {
-//     description: "Add two numbers",
-//     inputSchema: {
-//       a: z.number().describe("The first number"),
-//       b: z.number().describe("The second number"),
-//     },
-//     title: "Addition Tool",
-//   },
-//   ({ a, b }) => ({
-//     content: [{ text: String(a + b), type: "text" }],
-//   }),
-// )
+server.registerTool(
+  "createMemo",
+  {
+    description: "Create a new memo",
+    inputSchema: {
+      content: z.string().describe("The content of the memo"),
+    },
+    title: "Create Memo",
+  },
+  ({ content }) => {
+    const newMemo = createMemo(content)
+    return {
+      content: [{ text: JSON.stringify(newMemo), type: "text" }],
+    }
+  },
+)
+
+server.registerTool(
+  "getMemos",
+  {
+    description: "Get all memos",
+    inputSchema: {},
+    title: "Get Memos",
+  },
+  () => {
+    const memos = getMemos()
+    return {
+      content: [{ text: JSON.stringify(memos), type: "text" }],
+    }
+  },
+)
+
+server.registerTool(
+  "getMemo",
+  {
+    description: "Get a single memo by ID",
+    inputSchema: {
+      id: z.string().describe("The ID of the memo"),
+    },
+    title: "Get Memo",
+  },
+  ({ id }) => {
+    const memo = getMemo(id)
+    return {
+      content: [{ text: JSON.stringify(memo), type: "text" }],
+    }
+  },
+)
+
+server.registerTool(
+  "updateMemo",
+  {
+    description: "Update a memo",
+    inputSchema: {
+      content: z.string().describe("The new content of the memo"),
+      id: z.string().describe("The ID of the memo"),
+    },
+    title: "Update Memo",
+  },
+  ({ content, id }) => {
+    const updatedMemo = updateMemo(id, content)
+    return {
+      content: [{ text: JSON.stringify(updatedMemo), type: "text" }],
+    }
+  },
+)
+
+server.registerTool(
+  "deleteMemo",
+  {
+    description: "Delete a memo",
+    inputSchema: {
+      id: z.string().describe("The ID of the memo"),
+    },
+    title: "Delete Memo",
+  },
+  ({ id }) => {
+    const deletedMemo = deleteMemo(id)
+    return {
+      content: [{ text: JSON.stringify(deletedMemo), type: "text" }],
+    }
+  },
+)
 
 export async function run() {
   const transport = new StdioServerTransport()
