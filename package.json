@@ -19,7 +19,8 @@
     "format:check": "prettier --check --cache .",
     "test": "vitest run",
     "test:ui": "vitest --ui --coverage.enabled-true",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "quality": "pnpm format && pnpm lint && pnpm typecheck && pnpm test"
   },
   "keywords": [],
   "author": "108yen",
@@ -35,6 +36,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/108yen/script.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.0",
+    "lowdb": "^7.0.1",
+    "zod": "^3.0.2"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
