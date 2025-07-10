@@ -2,12 +2,19 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod"
 import { version } from "../package.json"
+import { db } from "./db"
 import { createMemo, deleteMemo, getMemo, getMemos, updateMemo } from "./memos"
 
-const server = new McpServer({
-  name: "memo-mcp",
-  version,
-})
+const server = new McpServer(
+  {
+    name: "memo-mcp",
+    version,
+  },
+  {
+    instructions:
+      "This is a memo management tool. You can create, read, update, and delete memos.",
+  },
+)
 
 server.registerTool(
   "createMemo",
@@ -94,6 +101,8 @@ server.registerTool(
 )
 
 export async function run() {
+  await db.read()
+
   const transport = new StdioServerTransport()
   await server.connect(transport)
 }

@@ -13,5 +13,3 @@ interface Schema {
 const adapter = new JSONFile<Schema>("db.json")
 const defaultData: Schema = { memos: [] }
 export const db = new Low(adapter, defaultData)
-
-await db.read()

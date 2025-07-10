@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid"
-import { db } from "./db.js"
+import { db } from "./db"
 
 export const createMemo = (content: string) => {
   const newMemo = { content, id: nanoid() }
