@@ -2,7 +2,14 @@ import { nanoid } from "nanoid"
 import { db } from "./db"
 
 export const createMemo = (title: string, content: string) => {
-  const newMemo = { content, id: nanoid(), title }
+  const now = new Date()
+  const newMemo = {
+    content,
+    createdAt: now,
+    id: nanoid(),
+    title,
+    updatedAt: now,
+  }
   db.data.memos.push(newMemo)
   db.write()
   return newMemo
@@ -21,6 +28,7 @@ export const updateMemo = (id: string, title: string, content: string) => {
   if (memo) {
     memo.content = content
     memo.title = title
+    memo.updatedAt = new Date()
     db.write()
     return memo
   }

@@ -19,6 +19,8 @@ describe("memo tool", () => {
     const memo = createMemo("test title", "test memo")
     expect(memo.content).toBe("test memo")
     expect(memo.title).toBe("test title")
+    expect(memo.createdAt).toBeInstanceOf(Date)
+    expect(memo.updatedAt).toBeInstanceOf(Date)
     const memos = getMemos()
     expect(memos.length).toBe(1)
   })
@@ -39,9 +41,11 @@ describe("memo tool", () => {
 
   it("should update a memo", () => {
     const memo = createMemo("test title", "test memo")
+    const updatedAt = memo.updatedAt
     const updatedMemo = updateMemo(memo.id, "updated title", "updated memo")
     expect(updatedMemo?.content).toBe("updated memo")
     expect(updatedMemo?.title).toBe("updated title")
+    expect(updatedMemo?.updatedAt).not.toBe(updatedAt)
     const foundMemo = getMemo(memo.id)
     expect(foundMemo?.content).toBe("updated memo")
     expect(foundMemo?.title).toBe("updated title")

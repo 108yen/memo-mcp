@@ -1,12 +1,7 @@
 import { Low } from "lowdb"
 import { JSONFile } from "lowdb/node"
+import type { Memo } from "./schemas"
 import { envSchema } from "./schemas"
-
-interface Memo {
-  content: string
-  id: string
-  title: string
-}
 
 interface Schema {
   memos: Memo[]
