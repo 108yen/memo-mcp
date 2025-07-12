@@ -1,22 +1,22 @@
 {
   "servers": {
-    // "local": {
-    //   "command": "node",
-    //   "args": ["${workspaceFolder}"],
-    //   // "env":{
-    //   //   "DB_PATH": "${workspaceFolder}/test.json"
-    //   // },
-    //   "dev": {
-    //     "watch": "dist/**/*.js",
-    //     "debug": {
-    //       "type": "node"
-    //     }
-    //   }
-    // },
-    "canary": {
-      "command": "npx",
-      "args": ["-y", "memo-mcp@canary"],
-      "env": {}
+    "local": {
+      "command": "node",
+      "args": ["${workspaceFolder}"],
+      // "env":{
+      //   "DB_PATH": "${workspaceFolder}/test.json"
+      // },
+      "dev": {
+        "watch": "dist/**/*.js",
+        "debug": {
+          "type": "node"
+        }
+      }
     }
+    // "canary": {
+    //   "command": "npx",
+    //   "args": ["-y", "memo-mcp@canary"],
+    //   "env": {}
+    // }
   }
 }

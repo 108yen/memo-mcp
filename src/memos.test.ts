@@ -16,35 +16,39 @@ describe("memo tool", () => {
   })
 
   it("should create a memo", () => {
-    const memo = createMemo("test memo")
+    const memo = createMemo("test title", "test memo")
     expect(memo.content).toBe("test memo")
+    expect(memo.title).toBe("test title")
     const memos = getMemos()
     expect(memos.length).toBe(1)
   })
 
   it("should get all memos", () => {
-    createMemo("memo 1")
-    createMemo("memo 2")
+    createMemo("memo 1", "memo 1 content")
+    createMemo("memo 2", "memo 2 content")
     const memos = getMemos()
     expect(memos.length).toBe(2)
   })
 
   it("should get a single memo", () => {
-    const memo = createMemo("test memo")
+    const memo = createMemo("test title", "test memo")
     const foundMemo = getMemo(memo.id)
     expect(foundMemo?.content).toBe("test memo")
+    expect(foundMemo?.title).toBe("test title")
   })
 
   it("should update a memo", () => {
-    const memo = createMemo("test memo")
-    const updatedMemo = updateMemo(memo.id, "updated memo")
+    const memo = createMemo("test title", "test memo")
+    const updatedMemo = updateMemo(memo.id, "updated title", "updated memo")
     expect(updatedMemo?.content).toBe("updated memo")
+    expect(updatedMemo?.title).toBe("updated title")
     const foundMemo = getMemo(memo.id)
     expect(foundMemo?.content).toBe("updated memo")
+    expect(foundMemo?.title).toBe("updated title")
   })
 
   it("should delete a memo", () => {
-    const memo = createMemo("test memo")
+    const memo = createMemo("test title", "test memo")
     const deletedMemo = deleteMemo(memo.id)
     expect(deletedMemo?.content).toBe("test memo")
     const memos = getMemos()
@@ -52,12 +56,18 @@ describe("memo tool", () => {
   })
 
   it("should search memos", () => {
-    createMemo("this is a test memo")
-    createMemo("another memo")
-    const memos = searchMemos("test")
-    expect(memos.length).toBe(1)
-    if (memos[0]) {
-      expect(memos[0].content).toBe("this is a test memo")
+    createMemo("this is a test title", "this is a test memo")
+    createMemo("another title", "another memo")
+    const memosByContent = searchMemos("test memo")
+    expect(memosByContent.length).toBe(1)
+    if (memosByContent[0]) {
+      expect(memosByContent[0].content).toBe("this is a test memo")
+    }
+
+    const memosByTitle = searchMemos("test title")
+    expect(memosByTitle.length).toBe(1)
+    if (memosByTitle[0]) {
+      expect(memosByTitle[0].title).toBe("this is a test title")
     }
   })
 })

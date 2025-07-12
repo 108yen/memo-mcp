@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid"
 import { db } from "./db"
 
-export const createMemo = (content: string) => {
-  const newMemo = { content, id: nanoid() }
+export const createMemo = (title: string, content: string) => {
+  const newMemo = { content, id: nanoid(), title }
   db.data.memos.push(newMemo)
   db.write()
   return newMemo
@@ -16,10 +16,11 @@ export const getMemo = (id: string) => {
   return db.data.memos.find((memo) => memo.id === id)
 }
 
-export const updateMemo = (id: string, content: string) => {
+export const updateMemo = (id: string, title: string, content: string) => {
   const memo = db.data.memos.find((memo) => memo.id === id)
   if (memo) {
     memo.content = content
+    memo.title = title
     db.write()
     return memo
   }
@@ -37,5 +38,7 @@ export const deleteMemo = (id: string) => {
 }
 
 export const searchMemos = (query: string) => {
-  return db.data.memos.filter((memo) => memo.content.includes(query))
+  return db.data.memos.filter(
+    (memo) => memo.content.includes(query) || memo.title.includes(query),
+  )
 }
