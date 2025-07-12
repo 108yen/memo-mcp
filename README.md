@@ -50,7 +50,7 @@ Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace
   "servers": {
     "canary": {
       "command": "npx",
-      "args": ["-y", "memo-mcp@canary"]
+      "args": ["-y", "memo-mcp"]
     }
   }
 }
