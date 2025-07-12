@@ -9,3 +9,17 @@
 LowDB is used for persistent, file-based storage, ensuring fast and reliable memo management without the need for a full-scale database server.
 
 ## Usage
+
+```json
+{
+  "mcpServers": {
+    "memo-mcp": {
+      "command": "npx",
+      "args": ["-y", "memo-mcp"],
+      "env": {
+        "PATH": "path/to/json_file.json" // Optional (default: db.json)
+      }
+    }
+  }
+}
+```

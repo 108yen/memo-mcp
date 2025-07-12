@@ -1,5 +1,6 @@
 import { Low } from "lowdb"
 import { JSONFile } from "lowdb/node"
+import { envSchema } from "./schemas"
 
 interface Memo {
   content: string
@@ -10,6 +11,9 @@ interface Schema {
   memos: Memo[]
 }
 
-const adapter = new JSONFile<Schema>("db.json")
+const env = envSchema.parse(process.env)
+
+const adapter = new JSONFile<Schema>(env.DB_PATH)
 const defaultData: Schema = { memos: [] }
+
 export const db = new Low(adapter, defaultData)
