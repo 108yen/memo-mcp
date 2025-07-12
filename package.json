@@ -4,7 +4,7 @@
   "description": "A simple memo management MCP using LowDB",
   "main": "bin/index.js",
   "bin": {
-    "script": "bin/index.js"
+    "memo-mcp": "bin/index.js"
   },
   "scripts": {
     "prepare": "lefthook install",
