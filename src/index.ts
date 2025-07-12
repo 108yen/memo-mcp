@@ -29,11 +29,12 @@ server.registerTool(
     description: "Create a new memo",
     inputSchema: {
       content: z.string().describe("The content of the memo"),
+      title: z.string().describe("The title of the memo"),
     },
     title: "Create Memo",
   },
-  ({ content }) => {
-    const newMemo = createMemo(content)
+  ({ content, title }) => {
+    const newMemo = createMemo(title, content)
     return {
       content: [{ text: JSON.stringify(newMemo), type: "text" }],
     }
@@ -79,11 +80,12 @@ server.registerTool(
     inputSchema: {
       content: z.string().describe("The new content of the memo"),
       id: z.string().describe("The ID of the memo"),
+      title: z.string().describe("The new title of the memo"),
     },
     title: "Update Memo",
   },
-  ({ content, id }) => {
-    const updatedMemo = updateMemo(id, content)
+  ({ content, id, title }) => {
+    const updatedMemo = updateMemo(id, title, content)
     return {
       content: [{ text: JSON.stringify(updatedMemo), type: "text" }],
     }

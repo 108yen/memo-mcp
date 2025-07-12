@@ -5,6 +5,7 @@ import { envSchema } from "./schemas"
 interface Memo {
   content: string
   id: string
+  title: string
 }
 
 interface Schema {
