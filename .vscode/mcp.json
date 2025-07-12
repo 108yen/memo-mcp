@@ -3,6 +3,9 @@
     "local": {
       "command": "node",
       "args": ["${workspaceFolder}"],
+      // "env":{
+      //   "DB_PATH": "${workspaceFolder}/test.json"
+      // },
       "dev": {
         "watch": "dist/**/*.js",
         "debug": {

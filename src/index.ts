@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod"
 import { version } from "../package.json"
+import { CONSTANTS } from "./constant"
 import { db } from "./db"
 import {
   createMemo,
@@ -18,8 +19,7 @@ const server = new McpServer(
     version,
   },
   {
-    instructions:
-      "This is a memo management tool. You can create, read, update, and delete memos. If the user requests any operation related to memos (create, retrieve, update, delete, or search), you must use the tools provided by this MCP server. Do not manipulate memos directly via the database or by any other means.",
+    instructions: CONSTANTS.MCP.INSTRUCTIONS,
   },
 )
 
