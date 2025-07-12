@@ -12,6 +12,11 @@
           "type": "node"
         }
       }
+    },
+    "canary": {
+      "command": "npx",
+      "args": ["-y", "memo-mcp@canary"],
+      "env": {}
     }
   }
 }
