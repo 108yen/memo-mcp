@@ -1,14 +1,23 @@
 # memo-mcp
 
-`memo-mcp` is an MCP (Model Context Protocol) server that enables agents to record, search, and retrieve memos using LowDB as a lightweight local database. This server provides a simple API for storing and managing memos, making it easy to integrate with agent-based systems or automation workflows. Key features include:
+`memo-mcp` is an MCP (Model Context Protocol) server that enables agents to record, search, and retrieve memos using LowDB as a lightweight local database.
 
-- Record new memos with flexible metadata
-- Search existing memos by keywords or attributes
-- Retrieve and read stored memos efficiently
+## Features
 
-LowDB is used for persistent, file-based storage, ensuring fast and reliable memo management without the need for a full-scale database server.
+The main tools provided by `memo-mcp` are as follows:
+
+| Tool Name   | Description                     |
+| ----------- | ------------------------------- |
+| createMemo  | Create a new memo               |
+| getMemos    | Retrieve all memos              |
+| getMemo     | Retrieve a memo by specified ID |
+| updateMemo  | Update a memo by specified ID   |
+| deleteMemo  | Delete a memo by specified ID   |
+| searchMemos | Search memos by keyword         |
 
 ## Usage
+
+`DB_PATH` is optional. (default: `db.json`)
 
 ```json
 {
@@ -17,8 +26,29 @@ LowDB is used for persistent, file-based storage, ensuring fast and reliable mem
       "command": "npx",
       "args": ["-y", "memo-mcp"],
       "env": {
-        "PATH": "path/to/json_file.json" // Optional (default: db.json)
+        "DB_PATH": "path/to/json_file.json"
       }
+    }
+  }
+}
+```
+
+### VS Code Installation Instructions
+
+For quick installation, use one of the one-click installation buttons below:
+
+[![Install with NPX in VS Code](https://img.shields.io/badge/VS_Code-NPM-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=memo-mcp&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22memo-mcp%22%5D%7D)
+
+For manual installation, add the following JSON block to your User Settings (JSON) file in VS Code. You can do this by pressing `Ctrl + Shift + P` and typing `Preferences: Open Settings (JSON)`.
+
+Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace. This will allow you to share the configuration with others.
+
+```json
+{
+  "servers": {
+    "canary": {
+      "command": "npx",
+      "args": ["-y", "memo-mcp@canary"]
     }
   }
 }
