@@ -39,13 +39,18 @@ describe("memo tool", () => {
     expect(foundMemo?.title).toBe("test title")
   })
 
-  it("should update a memo", () => {
+  it("should update a memo", async () => {
     const memo = createMemo("test title", "test memo")
     const updatedAt = memo.updatedAt
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
     const updatedMemo = updateMemo(memo.id, "updated title", "updated memo")
     expect(updatedMemo?.content).toBe("updated memo")
     expect(updatedMemo?.title).toBe("updated title")
-    expect(updatedMemo?.updatedAt).not.toBe(updatedAt)
+    expect(updatedMemo?.updatedAt.getTime()).toBeGreaterThan(
+      updatedAt.getTime(),
+    )
     const foundMemo = getMemo(memo.id)
     expect(foundMemo?.content).toBe("updated memo")
     expect(foundMemo?.title).toBe("updated title")
@@ -76,9 +81,12 @@ describe("memo tool", () => {
   })
 
   it("should search memos by date", async () => {
+    const now = new Date()
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
     createMemo("memo 1", "memo 1 content")
 
-    const now = new Date()
+    const middle = new Date()
 
     await new Promise((resolve) => setTimeout(resolve, 100))
     createMemo("memo 2", "memo 2 content")
@@ -86,7 +94,10 @@ describe("memo tool", () => {
     const memos = searchMemos({ start: now })
     expect(memos.length).toBe(2)
 
-    const memos2 = searchMemos({ end: now })
+    const memos2 = searchMemos({ end: middle, start: now })
     expect(memos2.length).toBe(1)
+
+    const memos3 = searchMemos({ end: now })
+    expect(memos3.length).toBe(0)
   })
 })
