@@ -8,7 +8,6 @@
 
 # testing
 /coverage
-db.json
 
 # misc
 .DS_Store
@@ -31,3 +30,7 @@ yarn-error.log*
 
 # eslint
 eslint-typegen.d.ts
+
+# db
+db.json
+memo.json

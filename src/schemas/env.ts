@@ -6,5 +6,5 @@ export const envSchema = z.object({
     .endsWith(".json", {
       message: "PATH should be a valid JSON file name",
     })
-    .or(z.string().default("db.json")),
+    .or(z.string().default("memo.json")),
 })
