@@ -19,8 +19,12 @@ describe("memo tool", () => {
     const memo = createMemo("test title", "test memo")
     expect(memo.content).toBe("test memo")
     expect(memo.title).toBe("test title")
-    expect(memo.createdAt).toBeInstanceOf(Date)
-    expect(memo.updatedAt).toBeInstanceOf(Date)
+    expect(memo.createdAt).toMatch(
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+    )
+    expect(memo.updatedAt).toMatch(
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+    )
     const memos = getMemos()
     expect(memos.length).toBe(1)
   })
@@ -41,14 +45,15 @@ describe("memo tool", () => {
 
   it("should update a memo", async () => {
     const memo = createMemo("test title", "test memo")
-    const updatedAt = memo.updatedAt
+    const updatedAt = new Date(memo.updatedAt)
 
     await new Promise((resolve) => setTimeout(resolve, 100))
 
     const updatedMemo = updateMemo(memo.id, "updated title", "updated memo")
-    expect(updatedMemo?.content).toBe("updated memo")
-    expect(updatedMemo?.title).toBe("updated title")
-    expect(updatedMemo?.updatedAt.getTime()).toBeGreaterThan(
+    expect(updatedMemo).toBeDefined()
+    expect(updatedMemo!.content).toBe("updated memo")
+    expect(updatedMemo!.title).toBe("updated title")
+    expect(new Date(updatedMemo!.updatedAt).getTime()).toBeGreaterThan(
       updatedAt.getTime(),
     )
     const foundMemo = getMemo(memo.id)

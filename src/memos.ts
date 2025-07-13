@@ -3,7 +3,8 @@ import type { SearchMemosParams } from "./schemas"
 import { db } from "./db"
 
 export const createMemo = (title: string, content: string) => {
-  const now = new Date()
+  const now = new Date().toISOString()
+
   const newMemo = {
     content,
     createdAt: now,
@@ -29,7 +30,8 @@ export const updateMemo = (id: string, title: string, content: string) => {
   if (memo) {
     memo.content = content
     memo.title = title
-    memo.updatedAt = new Date()
+    memo.updatedAt = new Date().toISOString()
+
     db.write()
     return memo
   }
@@ -52,10 +54,13 @@ export const searchMemos = (params: SearchMemosParams) => {
     if (query && !memo.content.includes(query) && !memo.title.includes(query)) {
       return false
     }
-    if (start && memo.updatedAt < start) {
+
+    const updatedAt = new Date(memo.updatedAt).getTime()
+
+    if (start && updatedAt < start.getTime()) {
       return false
     }
-    if (end && memo.updatedAt > end) {
+    if (end && updatedAt > end.getTime()) {
       return false
     }
     return true
