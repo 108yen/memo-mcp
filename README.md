@@ -11,14 +11,19 @@ This server stores memo contents in a local JSON file and provides comprehensive
 
 The main tools provided by `memo-mcp` are as follows:
 
-| Tool Name   | Description                     |
-| ----------- | ------------------------------- |
-| createMemo  | Create a new memo               |
-| getMemos    | Retrieve all memos              |
-| getMemo     | Retrieve a memo by specified ID |
-| updateMemo  | Update a memo by specified ID   |
-| deleteMemo  | Delete a memo by specified ID   |
-| searchMemos | Search memos by keyword         |
+| Tool Name      | Description                     |
+| -------------- | ------------------------------- |
+| createMemo     | Create a new memo               |
+| getMemos       | Retrieve all memos              |
+| getMemo        | Retrieve a memo by specified ID |
+| updateMemo     | Update a memo by specified ID   |
+| deleteMemo     | Delete a memo by specified ID   |
+| searchMemos    | Search memos by keyword         |
+| createCategory | Create a new category           |
+| getCategories  | Retrieve all categories         |
+| getCategory    | Retrieve a category by ID       |
+| updateCategory | Update a category by ID         |
+| deleteCategory | Delete a category by ID         |
 
 ## Usage
 
