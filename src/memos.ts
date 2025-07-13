@@ -52,10 +52,13 @@ export const searchMemos = (params: SearchMemosParams) => {
     if (query && !memo.content.includes(query) && !memo.title.includes(query)) {
       return false
     }
-    if (start && memo.updatedAt < start) {
+
+    const updatedAt = new Date(memo.updatedAt).getTime()
+
+    if (start && updatedAt < start.getTime()) {
       return false
     }
-    if (end && memo.updatedAt > end) {
+    if (end && updatedAt > end.getTime()) {
       return false
     }
     return true
