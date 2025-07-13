@@ -12,7 +12,7 @@ import {
   searchMemos,
   updateMemo,
 } from "./memos"
-import { SearchMemosSchema } from "./schemas"
+import { MemoSchema, SearchMemosSchema } from "./schemas"
 
 const server = new McpServer(
   {
@@ -32,12 +32,14 @@ server.registerTool(
       content: z.string().describe("The content of the memo"),
       title: z.string().describe("The title of the memo"),
     },
+    outputSchema: { memo: MemoSchema },
     title: "Create Memo",
   },
   ({ content, title }) => {
     const newMemo = createMemo(title, content)
     return {
       content: [{ text: JSON.stringify(newMemo), type: "text" }],
+      structuredContent: { memo: newMemo },
     }
   },
 )
@@ -47,12 +49,14 @@ server.registerTool(
   {
     description: "Get all memos",
     inputSchema: {},
+    outputSchema: { memos: z.array(MemoSchema) },
     title: "Get Memos",
   },
   () => {
     const memos = getMemos()
     return {
       content: [{ text: JSON.stringify(memos), type: "text" }],
+      structuredContent: { memos },
     }
   },
 )
@@ -64,12 +68,14 @@ server.registerTool(
     inputSchema: {
       id: z.string().describe("The ID of the memo"),
     },
+    outputSchema: { memo: MemoSchema.optional() },
     title: "Get Memo",
   },
   ({ id }) => {
     const memo = getMemo(id)
     return {
       content: [{ text: JSON.stringify(memo), type: "text" }],
+      structuredContent: { memo },
     }
   },
 )
@@ -83,12 +89,21 @@ server.registerTool(
       id: z.string().describe("The ID of the memo"),
       title: z.string().describe("The new title of the memo"),
     },
+    outputSchema: { memo: MemoSchema },
     title: "Update Memo",
   },
   ({ content, id, title }) => {
     const updatedMemo = updateMemo(id, title, content)
+    if (!updatedMemo) {
+      return {
+        content: [{ text: "Memo not found", type: "text" }],
+        isError: true,
+      }
+    }
+
     return {
       content: [{ text: JSON.stringify(updatedMemo), type: "text" }],
+      structuredContent: { memo: updatedMemo },
     }
   },
 )
@@ -100,12 +115,21 @@ server.registerTool(
     inputSchema: {
       id: z.string().describe("The ID of the memo"),
     },
+    outputSchema: { memo: MemoSchema },
     title: "Delete Memo",
   },
   ({ id }) => {
     const deletedMemo = deleteMemo(id)
+    if (!deletedMemo) {
+      return {
+        content: [{ text: "Memo not found", type: "text" }],
+        isError: true,
+      }
+    }
+
     return {
       content: [{ text: JSON.stringify(deletedMemo), type: "text" }],
+      structuredContent: { memo: deletedMemo },
     }
   },
 )
@@ -115,12 +139,14 @@ server.registerTool(
   {
     description: "Search memos by keyword and date range",
     inputSchema: SearchMemosSchema.shape,
+    outputSchema: { memos: z.array(MemoSchema) },
     title: "Search Memos",
   },
   (params) => {
     const memos = searchMemos(params)
     return {
       content: [{ text: JSON.stringify(memos), type: "text" }],
+      structuredContent: { memos },
     }
   },
 )

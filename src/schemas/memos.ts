@@ -2,13 +2,25 @@ import { z } from "zod"
 
 export const MemoSchema = z.object({
   content: z.string(),
-  createdAt: z.date(),
+  createdAt: z
+    .string()
+    .datetime()
+    .transform((date) => new Date(date))
+    .describe(
+      "The date when the memo was created. Display in ISO 8601 format, UTC+0 timezone.",
+    ),
   id: z.string(),
   title: z.string(),
-  updatedAt: z.date(),
+  updatedAt: z
+    .string()
+    .datetime()
+    .transform((date) => new Date(date))
+    .describe(
+      "The date when the memo was last updated. Display in ISO 8601 format, UTC+0 timezone.",
+    ),
 })
 
-export type Memo = z.infer<typeof MemoSchema>
+export type Memo = typeof MemoSchema._input
 
 export const SearchMemosSchema = z.object({
   end: z
