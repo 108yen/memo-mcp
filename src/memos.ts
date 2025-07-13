@@ -1,8 +1,16 @@
 import { nanoid } from "nanoid"
+import type { SearchMemosParams } from "./schemas"
 import { db } from "./db"
 
 export const createMemo = (title: string, content: string) => {
-  const newMemo = { content, id: nanoid(), title }
+  const now = new Date()
+  const newMemo = {
+    content,
+    createdAt: now,
+    id: nanoid(),
+    title,
+    updatedAt: now,
+  }
   db.data.memos.push(newMemo)
   db.write()
   return newMemo
@@ -21,6 +29,7 @@ export const updateMemo = (id: string, title: string, content: string) => {
   if (memo) {
     memo.content = content
     memo.title = title
+    memo.updatedAt = new Date()
     db.write()
     return memo
   }
@@ -37,8 +46,18 @@ export const deleteMemo = (id: string) => {
   return null
 }
 
-export const searchMemos = (query: string) => {
-  return db.data.memos.filter(
-    (memo) => memo.content.includes(query) || memo.title.includes(query),
-  )
+export const searchMemos = (params: SearchMemosParams) => {
+  const { end, query, start } = params
+  return db.data.memos.filter((memo) => {
+    if (query && !memo.content.includes(query) && !memo.title.includes(query)) {
+      return false
+    }
+    if (start && memo.updatedAt < start) {
+      return false
+    }
+    if (end && memo.updatedAt > end) {
+      return false
+    }
+    return true
+  })
 }

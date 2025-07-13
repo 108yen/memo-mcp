@@ -12,6 +12,7 @@ import {
   searchMemos,
   updateMemo,
 } from "./memos"
+import { SearchMemosSchema } from "./schemas"
 
 const server = new McpServer(
   {
@@ -112,14 +113,12 @@ server.registerTool(
 server.registerTool(
   "searchMemos",
   {
-    description: "Search memos by keyword",
-    inputSchema: {
-      query: z.string().describe("The keyword to search for"),
-    },
+    description: "Search memos by keyword and date range",
+    inputSchema: SearchMemosSchema.shape,
     title: "Search Memos",
   },
-  ({ query }) => {
-    const memos = searchMemos(query)
+  (params) => {
+    const memos = searchMemos(params)
     return {
       content: [{ text: JSON.stringify(memos), type: "text" }],
     }
