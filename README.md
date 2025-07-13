@@ -1,7 +1,7 @@
 # memo-mcp
 
 [![codecov](https://codecov.io/gh/108yen/memo-mcp/graph/badge.svg?token=7C4VJLGXX9)](https://codecov.io/gh/108yen/memo-mcp)
-[![MIT LIcense](https://img.shields.io/github/license/108yen/memo-mcp)](https://img.shields.io/github/license/108yen/memo-mcp)
+[![MIT License](https://img.shields.io/github/license/108yen/memo-mcp)](https://img.shields.io/github/license/108yen/memo-mcp)
 
 `memo-mcp` is an MCP (Model Context Protocol) server that enables agents to record, search, and retrieve memos using [LowDB](https://github.com/typicode/lowdb) as a lightweight local database.
 
