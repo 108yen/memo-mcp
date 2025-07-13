@@ -2,7 +2,7 @@ import { nanoid } from "nanoid"
 import type { SearchMemosParams } from "./schemas"
 import { db } from "./db"
 
-export const createMemo = (title: string, content: string) => {
+export const createMemo = async (title: string, content: string) => {
   const now = new Date().toISOString()
 
   const newMemo = {
@@ -13,43 +13,54 @@ export const createMemo = (title: string, content: string) => {
     updatedAt: now,
   }
   db.data.memos.push(newMemo)
-  db.write()
+  await db.write()
+
   return newMemo
 }
 
-export const getMemos = () => {
+export const getMemos = async () => {
+  await db.read()
   return db.data.memos
 }
 
-export const getMemo = (id: string) => {
+export const getMemo = async (id: string) => {
+  await db.read()
   return db.data.memos.find((memo) => memo.id === id)
 }
 
-export const updateMemo = (id: string, title: string, content: string) => {
+export const updateMemo = async (
+  id: string,
+  title: string,
+  content: string,
+) => {
+  await db.read()
   const memo = db.data.memos.find((memo) => memo.id === id)
   if (memo) {
     memo.content = content
     memo.title = title
     memo.updatedAt = new Date().toISOString()
 
-    db.write()
+    await db.write()
     return memo
   }
   return null
 }
 
-export const deleteMemo = (id: string) => {
+export const deleteMemo = async (id: string) => {
+  await db.read()
   const index = db.data.memos.findIndex((memo) => memo.id === id)
   if (index !== -1) {
     const [deletedMemo] = db.data.memos.splice(index, 1)
-    db.write()
+    await db.write()
     return deletedMemo
   }
   return null
 }
 
-export const searchMemos = (params: SearchMemosParams) => {
+export const searchMemos = async (params: SearchMemosParams) => {
   const { end, query, start } = params
+  await db.read()
+
   return db.data.memos.filter((memo) => {
     if (query && !memo.content.includes(query) && !memo.title.includes(query)) {
       return false

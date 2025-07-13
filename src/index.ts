@@ -3,7 +3,6 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod"
 import { version } from "../package.json"
 import { CONSTANTS } from "./constant"
-import { db } from "./db"
 import {
   createMemo,
   deleteMemo,
@@ -35,8 +34,8 @@ server.registerTool(
     outputSchema: { memo: MemoSchema },
     title: "Create Memo",
   },
-  ({ content, title }) => {
-    const newMemo = createMemo(title, content)
+  async ({ content, title }) => {
+    const newMemo = await createMemo(title, content)
     return {
       content: [{ text: JSON.stringify(newMemo), type: "text" }],
       structuredContent: { memo: newMemo },
@@ -52,8 +51,8 @@ server.registerTool(
     outputSchema: { memos: z.array(MemoSchema) },
     title: "Get Memos",
   },
-  () => {
-    const memos = getMemos()
+  async () => {
+    const memos = await getMemos()
     return {
       content: [{ text: JSON.stringify(memos), type: "text" }],
       structuredContent: { memos },
@@ -71,8 +70,8 @@ server.registerTool(
     outputSchema: { memo: MemoSchema.optional() },
     title: "Get Memo",
   },
-  ({ id }) => {
-    const memo = getMemo(id)
+  async ({ id }) => {
+    const memo = await getMemo(id)
     return {
       content: [{ text: JSON.stringify(memo), type: "text" }],
       structuredContent: { memo },
@@ -92,8 +91,8 @@ server.registerTool(
     outputSchema: { memo: MemoSchema },
     title: "Update Memo",
   },
-  ({ content, id, title }) => {
-    const updatedMemo = updateMemo(id, title, content)
+  async ({ content, id, title }) => {
+    const updatedMemo = await updateMemo(id, title, content)
     if (!updatedMemo) {
       return {
         content: [{ text: "Memo not found", type: "text" }],
@@ -118,8 +117,8 @@ server.registerTool(
     outputSchema: { memo: MemoSchema },
     title: "Delete Memo",
   },
-  ({ id }) => {
-    const deletedMemo = deleteMemo(id)
+  async ({ id }) => {
+    const deletedMemo = await deleteMemo(id)
     if (!deletedMemo) {
       return {
         content: [{ text: "Memo not found", type: "text" }],
@@ -142,8 +141,8 @@ server.registerTool(
     outputSchema: { memos: z.array(MemoSchema) },
     title: "Search Memos",
   },
-  (params) => {
-    const memos = searchMemos(params)
+  async (params) => {
+    const memos = await searchMemos(params)
     return {
       content: [{ text: JSON.stringify(memos), type: "text" }],
       structuredContent: { memos },
@@ -152,8 +151,6 @@ server.registerTool(
 )
 
 export async function run() {
-  await db.read()
-
   const transport = new StdioServerTransport()
   await server.connect(transport)
 }
