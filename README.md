@@ -19,7 +19,7 @@ The main tools provided by `memo-mcp` are as follows:
 
 ## Usage
 
-`DB_PATH` is optional. (default: `db.json`)
+`DB_PATH` is optional. (default: `memo.json`)
 
 ```json
 {

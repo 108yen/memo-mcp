@@ -8,7 +8,8 @@
 
 # testing
 /coverage
-db.json
+memo.test.json
+memo.json
 
 # misc
 .DS_Store
