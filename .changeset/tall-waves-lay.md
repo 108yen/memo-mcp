@@ -2,4 +2,4 @@
 "memo-mcp": patch
 ---
 
-Change default `DB_PATTH`.
+Change default `DB_PATH`.

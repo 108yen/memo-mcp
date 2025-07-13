@@ -8,6 +8,8 @@
 
 # testing
 /coverage
+memo.test.json
+memo.json
 
 # misc
 .DS_Store
@@ -33,4 +35,3 @@ eslint-typegen.d.ts
 
 # db
 db.json
-memo.json
