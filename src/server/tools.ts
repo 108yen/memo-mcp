@@ -55,11 +55,18 @@ export function registerTools(server: McpServer) {
       inputSchema: {
         id: z.string().describe("The ID of the memo"),
       },
-      outputSchema: { memo: MemoSchema.optional() },
+      outputSchema: { memo: MemoSchema },
       title: "Get Memo",
     },
     async ({ id }) => {
       const memo = await getMemo(id)
+      if (!memo) {
+        return {
+          content: [{ text: "Memo not found", type: "text" }],
+          isError: true,
+        }
+      }
+
       return {
         content: [{ text: JSON.stringify(memo), type: "text" }],
         structuredContent: { memo },
