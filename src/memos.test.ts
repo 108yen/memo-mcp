@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it } from "vitest"
-import { db } from "./db"
+import { describe, expect, it } from "vitest"
+import { setup } from "../tests/vitest.setup"
 import {
   createMemo,
   deleteMemo,
@@ -9,12 +9,9 @@ import {
   updateMemo,
 } from "./memos"
 
-describe("memo tool", () => {
-  beforeEach(async () => {
-    db.data.memos = []
-    await db.write()
-  })
+setup()
 
+describe("memo tool", () => {
   it("should create a memo", async () => {
     const memo = await createMemo("test title", "test memo")
 
@@ -51,8 +48,6 @@ describe("memo tool", () => {
   it("should update a memo", async () => {
     const memo = await createMemo("test title", "test memo")
     const updatedAt = new Date(memo.updatedAt)
-
-    await new Promise((resolve) => setTimeout(resolve, 100))
 
     const updatedMemo = await updateMemo(
       memo.id,
