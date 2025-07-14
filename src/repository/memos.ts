@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
-import type { CreateMemo, SearchMemosParams, UpdateMemo } from "./schemas"
-import { db } from "./db"
+import type { CreateMemo, SearchMemosParams, UpdateMemo } from "../schemas"
+import { db } from "../db"
 
 export const createMemo = async (memo: CreateMemo) => {
   const now = new Date().toISOString()

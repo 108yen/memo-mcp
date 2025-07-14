@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
-import type { Category, CreateCategory, UpdateCategory } from "./schemas"
-import { db } from "./db"
+import type { Category, CreateCategory, UpdateCategory } from "../schemas"
+import { db } from "../db"
 
 export const createCategory = async (
   category: CreateCategory,

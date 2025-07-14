@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest"
+import { db } from "../db"
 import {
   createCategory,
   deleteCategory,
@@ -6,7 +7,6 @@ import {
   getCategory,
   updateCategory,
 } from "./categories"
-import { db } from "./db"
 import { createMemo } from "./memos"
 
 describe("categories", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { setup } from "../tests/vitest.setup"
+import { setup } from "../../tests/vitest.setup"
 import { createCategory } from "./categories"
 import {
   createMemo,

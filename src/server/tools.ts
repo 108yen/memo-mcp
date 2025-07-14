@@ -6,7 +6,7 @@ import {
   getCategories,
   getCategory,
   updateCategory,
-} from "../categories"
+} from "../repository/categories"
 import {
   createMemo,
   deleteMemo,
@@ -14,7 +14,7 @@ import {
   getMemos,
   searchMemos,
   updateMemo,
-} from "../memos"
+} from "../repository/memos"
 import {
   CategorySchema,
   CreateCategorySchema,
