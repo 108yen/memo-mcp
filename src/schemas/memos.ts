@@ -1,6 +1,7 @@
 import { z } from "zod"
 
 export const MemoSchema = z.object({
+  categoryId: z.string().optional(),
   content: z.string(),
   createdAt: z
     .string()
@@ -20,9 +21,26 @@ export const MemoSchema = z.object({
     ),
 })
 
-export type Memo = typeof MemoSchema._input
+export type Memo = z.input<typeof MemoSchema>
+
+export const CreateMemoSchema = z.object({
+  categoryId: z.string().optional(),
+  content: z.string(),
+  title: z.string(),
+})
+
+export type CreateMemo = z.infer<typeof CreateMemoSchema>
+
+export const UpdateMemoSchema = z.object({
+  categoryId: z.string().optional(),
+  content: z.string().optional(),
+  title: z.string().optional(),
+})
+
+export type UpdateMemo = z.infer<typeof UpdateMemoSchema>
 
 export const SearchMemosSchema = z.object({
+  categoryId: z.string().optional(),
   end: z
     .string()
     .datetime({

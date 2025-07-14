@@ -309,7 +309,6 @@ describe("mcp test", () => {
       })
 
       it("should delete a memo", async () => {
-        // メモを作成
         const createResult = await client.callTool({
           arguments: {
             content: "test memo",
@@ -337,6 +336,232 @@ describe("mcp test", () => {
               ),
               id: createdMemoId,
               title: "test title",
+              updatedAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+            },
+          },
+        })
+      })
+    })
+
+    describe("createCategory", () => {
+      it("should create a category", async () => {
+        const result = await client.callTool({
+          arguments: {
+            name: "test category",
+          },
+          name: "createCategory",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: expect.any(String), type: "text" }],
+          structuredContent: {
+            category: {
+              createdAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+              id: expect.any(String),
+              name: "test category",
+              updatedAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+            },
+          },
+        })
+      })
+    })
+
+    describe("getCategory", () => {
+      it("should return error when no category exists match id", async () => {
+        const result = await client.callTool({
+          arguments: {
+            id: "non-existent-id",
+          },
+          name: "getCategory",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: "Category not found", type: "text" }],
+          isError: true,
+        })
+      })
+
+      it("should get a category by ID", async () => {
+        const createResult = await client.callTool({
+          arguments: {
+            name: "test category",
+          },
+          name: "createCategory",
+        })
+
+        const createdCategoryId = (createResult.structuredContent as any)
+          .category.id
+
+        const result = await client.callTool({
+          arguments: {
+            id: createdCategoryId,
+          },
+          name: "getCategory",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: expect.any(String), type: "text" }],
+          structuredContent: {
+            category: {
+              createdAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+              id: createdCategoryId,
+              name: "test category",
+              updatedAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+            },
+          },
+        })
+      })
+    })
+
+    describe("getCategories", () => {
+      it("should return empty array when no categories exist", async () => {
+        const result = await client.callTool({
+          arguments: {},
+          name: "getCategories",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: "[]", type: "text" }],
+          structuredContent: {
+            categories: [],
+          },
+        })
+      })
+
+      it("should get all categories after creating one", async () => {
+        await client.callTool({
+          arguments: {
+            name: "test category",
+          },
+          name: "createCategory",
+        })
+
+        const result = await client.callTool({
+          arguments: {},
+          name: "getCategories",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: expect.any(String), type: "text" }],
+          structuredContent: {
+            categories: expect.arrayContaining([
+              expect.objectContaining({
+                createdAt: expect.any(String),
+                id: expect.any(String),
+                name: "test category",
+                updatedAt: expect.any(String),
+              }),
+            ]),
+          },
+        })
+      })
+    })
+
+    describe("updateCategory", () => {
+      it("should return error when updating non-existent category", async () => {
+        const result = await client.callTool({
+          arguments: {
+            id: "non-existent-id",
+            name: "updated category",
+          },
+          name: "updateCategory",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: "Category not found", type: "text" }],
+          isError: true,
+        })
+      })
+
+      it("should update a category", async () => {
+        const createResult = await client.callTool({
+          arguments: {
+            name: "test category",
+          },
+          name: "createCategory",
+        })
+
+        const createdCategoryId = (createResult.structuredContent as any)
+          .category.id
+
+        const result = await client.callTool({
+          arguments: {
+            id: createdCategoryId,
+            name: "updated category",
+          },
+          name: "updateCategory",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: expect.any(String), type: "text" }],
+          structuredContent: {
+            category: {
+              createdAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+              id: createdCategoryId,
+              name: "updated category",
+              updatedAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+            },
+          },
+        })
+      })
+    })
+
+    describe("deleteCategory", () => {
+      it("should return error when deleting non-existent category", async () => {
+        const result = await client.callTool({
+          arguments: {
+            id: "non-existent-id",
+          },
+          name: "deleteCategory",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: "Category not found", type: "text" }],
+          isError: true,
+        })
+      })
+
+      it("should delete a category", async () => {
+        const createResult = await client.callTool({
+          arguments: {
+            name: "test category",
+          },
+          name: "createCategory",
+        })
+
+        const createdCategoryId = (createResult.structuredContent as any)
+          .category.id
+
+        const result = await client.callTool({
+          arguments: {
+            id: createdCategoryId,
+          },
+          name: "deleteCategory",
+        })
+
+        expect(result).toEqual({
+          content: [{ text: expect.any(String), type: "text" }],
+          structuredContent: {
+            category: {
+              createdAt: expect.stringMatching(
+                /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
+              ),
+              id: createdCategoryId,
+              name: "test category",
               updatedAt: expect.stringMatching(
                 /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
               ),
