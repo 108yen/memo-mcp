@@ -6,6 +6,7 @@ export const createCategory = async (
   category: CreateCategory,
 ): Promise<Category> => {
   const now = new Date().toISOString()
+
   const newCategory: Category = {
     ...category,
     createdAt: now,
@@ -14,6 +15,7 @@ export const createCategory = async (
   }
   db.data.categories.push(newCategory)
   await db.write()
+
   return newCategory
 }
 
@@ -31,26 +33,26 @@ export const getCategory = async (
 
 export const updateCategory = async (
   id: string,
-  category: UpdateCategory,
+  { name }: UpdateCategory,
 ): Promise<Category | undefined> => {
   const index = db.data.categories.findIndex((c) => c.id === id)
   if (index === -1) {
     return undefined
   }
-  const now = new Date().toISOString()
+
   const existingCategory = db.data.categories[index]
   if (!existingCategory) {
     return undefined
   }
+
   const newCategory: Category = {
     ...existingCategory,
-    createdAt: existingCategory.createdAt,
-    id: existingCategory.id,
-    name: category.name || existingCategory.name,
-    updatedAt: now,
+    ...(name ? { name } : {}),
+    updatedAt: new Date().toISOString(),
   }
   db.data.categories[index] = newCategory
   await db.write()
+
   return newCategory
 }
 
@@ -61,13 +63,14 @@ export const deleteCategory = async (
   if (index === -1) {
     return undefined
   }
+
   const deletedCategory = db.data.categories.splice(index, 1)[0]
-  // メモからカテゴリー情報を削除
   db.data.memos.forEach((memo) => {
     if (memo.categoryId === id) {
       memo.categoryId = undefined
     }
   })
   await db.write()
+
   return deletedCategory
 }

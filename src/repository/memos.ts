@@ -29,35 +29,39 @@ export const getMemo = async (id: string) => {
 
 export const updateMemo = async (id: string, memo: UpdateMemo) => {
   await db.read()
+
   const index = db.data.memos.findIndex((memo) => memo.id === id)
-  if (index !== -1) {
-    const existingMemo = db.data.memos[index]
-    if (!existingMemo) {
-      return undefined
-    }
-    const newMemo = {
-      ...existingMemo,
-      ...memo,
-      createdAt: existingMemo.createdAt,
-      id: existingMemo.id,
-      updatedAt: new Date().toISOString(),
-    }
-    db.data.memos[index] = newMemo
-    await db.write()
-    return newMemo
+  if (index == -1) {
+    return undefined
   }
-  return null
+
+  const existingMemo = db.data.memos[index]
+  if (!existingMemo) {
+    return undefined
+  }
+
+  const newMemo = {
+    ...existingMemo,
+    ...memo,
+    updatedAt: new Date().toISOString(),
+  }
+  db.data.memos[index] = newMemo
+  await db.write()
+
+  return newMemo
 }
 
 export const deleteMemo = async (id: string) => {
   await db.read()
+
   const index = db.data.memos.findIndex((memo) => memo.id === id)
-  if (index !== -1) {
-    const [deletedMemo] = db.data.memos.splice(index, 1)
-    await db.write()
-    return deletedMemo
+  if (index == -1) {
+    return undefined
   }
-  return null
+
+  const [deletedMemo] = db.data.memos.splice(index, 1)
+  await db.write()
+  return deletedMemo
 }
 
 export const searchMemos = async (params: SearchMemosParams) => {

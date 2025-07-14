@@ -50,6 +50,8 @@ describe("memo tool", () => {
     const memo = await createMemo({ content: "test memo", title: "test title" })
     const updatedAt = new Date(memo.updatedAt)
 
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
     const updatedMemo = await updateMemo(memo.id, {
       content: "updated memo",
       title: "updated title",
