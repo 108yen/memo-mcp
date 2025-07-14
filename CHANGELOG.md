@@ -1,5 +1,13 @@
 # memo-mcp
 
+## 1.1.1
+
+### Patch Changes
+
+- [#10](https://github.com/108yen/memo-mcp/pull/10) [`cb21495`](https://github.com/108yen/memo-mcp/commit/cb214956dc5d456402f8ba4795ae01ecf6fde5c9) Thanks [@108yen](https://github.com/108yen)! - Added error handling for `getMemo`.
+
+- [#9](https://github.com/108yen/memo-mcp/pull/9) [`eab63d3`](https://github.com/108yen/memo-mcp/commit/eab63d34aa8be5a9e4cedcfe4a8185bd0ec1796a) Thanks [@108yen](https://github.com/108yen)! - Change default `DB_PATH`.
+
 ## 1.1.0
 
 ### Minor Changes
