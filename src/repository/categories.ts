@@ -35,6 +35,7 @@ export const updateCategory = async (
   id: string,
   { name }: UpdateCategory,
 ): Promise<Category | undefined> => {
+  await db.read()
   const index = db.data.categories.findIndex((c) => c.id === id)
   if (index === -1) {
     return undefined
@@ -59,6 +60,7 @@ export const updateCategory = async (
 export const deleteCategory = async (
   id: string,
 ): Promise<Category | undefined> => {
+  await db.read()
   const index = db.data.categories.findIndex((c) => c.id === id)
   if (index === -1) {
     return undefined

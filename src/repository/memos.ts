@@ -35,10 +35,7 @@ export const updateMemo = async (id: string, memo: UpdateMemo) => {
     return undefined
   }
 
-  const existingMemo = db.data.memos[index]
-  if (!existingMemo) {
-    return undefined
-  }
+  const existingMemo = db.data.memos[index]!
 
   const newMemo = {
     ...existingMemo,
