@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const CategorySchema = z.object({
   createdAt: z.string().datetime(),
-  id: z.string().uuid(),
+  id: z.string(),
   name: z.string().min(1),
   updatedAt: z.string().datetime(),
 })
