@@ -1,5 +1,6 @@
 # memo-mcp
 
+[![NPM Version](https://img.shields.io/npm/v/memo-mcp)](https://www.npmjs.com/package/memo-mcp)
 [![codecov](https://codecov.io/gh/108yen/memo-mcp/graph/badge.svg?token=7C4VJLGXX9)](https://codecov.io/gh/108yen/memo-mcp)
 [![MIT License](https://img.shields.io/github/license/108yen/memo-mcp)](https://img.shields.io/github/license/108yen/memo-mcp)
 
