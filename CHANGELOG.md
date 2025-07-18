@@ -1,5 +1,15 @@
 # memo-mcp
 
+## 1.2.0
+
+### Minor Changes
+
+- [#11](https://github.com/108yen/memo-mcp/pull/11) [`a3acb68`](https://github.com/108yen/memo-mcp/commit/a3acb6816a00256c4724970b6d3312e89569857e) Thanks [@108yen](https://github.com/108yen)! - Added category field.
+
+### Patch Changes
+
+- [`dbd335c`](https://github.com/108yen/memo-mcp/commit/dbd335c2d240b173f678ecf54ffc277957c6e34d) Thanks [@108yen](https://github.com/108yen)! - Updated mcp instructions.
+
 ## 1.1.1
 
 ### Patch Changes
