@@ -6,6 +6,10 @@
 
 `memo-mcp` is an MCP (Model Context Protocol) server that enables agents to record, search, and retrieve memos using [LowDB](https://github.com/typicode/lowdb) as a lightweight local database.
 
+<a href="https://glama.ai/mcp/servers/@108yen/memo-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@108yen/memo-mcp/badge" alt="memo-mcp MCP server" />
+</a>
+
 This server stores memo contents in a local JSON file and provides comprehensive memo management functionality including creation, updates, search, and retrieval operations. All data is persisted locally using LowDB, making it ideal for personal memo management without requiring external database dependencies.
 
 ## Features
